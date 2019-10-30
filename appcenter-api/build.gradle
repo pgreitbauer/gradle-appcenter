@@ -1,0 +1,24 @@
+plugins {
+    id 'groovy'
+    id 'org.hidetake.swagger.generator' version '2.18.1'
+}
+
+dependencies {
+    swaggerCodegen 'io.swagger:swagger-codegen-cli:2.4.9' // Swagger Codegen V2
+}
+
+swaggerSources {
+    appcenter {
+        inputFile = file('src/main/resources/swagger/appcenter.json')
+        code {
+            language = 'groovy'
+            configFile = file('src/main/resources/swagger/appcenter-config.json')
+            // Validate YAML before code generation. for Swagger Codegen V2 / V3
+            //dependsOn validation
+        }
+    }
+}
+
+compileJava.dependsOn swaggerSources.appcenter.code
+sourceSets.main.java.srcDir "${swaggerSources.appcenter.code.outputDir}/src/main/groovy"
+sourceSets.main.resources.srcDir "${swaggerSources.appcenter.code.outputDir}/src/main/resources"

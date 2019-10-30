@@ -1,3 +1,4 @@
 rootProject.name = 'appcenter'
 enableFeaturePreview('STABLE_PUBLISHING')
-
+include 'appcenter-api'
+include 'appcenter-gradle-plugin'
